@@ -1,2 +1,29 @@
-# recognizer
-Настольное приложение для распознавания голоса с использованием библиотеки Vosk, построенное на Electron.
+# Recognizer
+
+> My Recognizer app built with Electron
+
+
+## Dev
+
+```
+$ npm install
+```
+
+### Run
+
+```
+$ bozon start
+```
+
+### Package
+
+```
+$ bozon package
+```
+
+Builds the app for OS X, Linux, and Windows, using [electron-builder](https://github.com/electron-userland/electron-builder).
+
+
+## License
+
+The MIT License (MIT) © Sviatoslav Shmoilov 2023

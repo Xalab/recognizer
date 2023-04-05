@@ -1,0 +1,65 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, "Helvetica Neue", Helvetica, sans-serif;
+  background-color: rgb(127, 176, 255);
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 100;
+  color: #333;
+}
+
+.model-choose,
+.start-rec {
+  text-align: center;
+}
+
+.model-choose>button,
+.start-rec>button {
+  font-size: 20px;
+  background-color: #ffffff;
+  width: 330px;
+  padding: 10px;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  border-radius: 20px;
+  border: 0px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.model-choose>button:hover,
+.start-rec>button:hover {
+  background-color: #ededed;
+  cursor: pointer;
+}
+
+.model-choose>button:active,
+.start-rec>button:active {
+  background-color: #d0d0d0;
+}
+
+.messages {
+  margin: 20px auto 0px auto;
+  width: 400px;
+  height: auto;
+  background-color: azure;
+  border-radius: 10px;
+}
+
+.messages>h2 {
+  padding: 10px;
+}
+
+.messages>p {
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 4px;
+}

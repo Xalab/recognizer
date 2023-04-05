@@ -1,0 +1,3 @@
+{
+    "electronArgs": ["--consoleEncoding", "UTF-8"]
+}
