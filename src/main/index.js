@@ -3,6 +3,7 @@ import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 const { spawn } = require('child_process');
 import Express from 'express';
 import bodyParser from 'body-parser';
+import { checkForUpdates } from './updater';
 
 console.log("Приложение начинает работу!");
 
@@ -31,6 +32,10 @@ const createWindow = () => {
 }
 
 app.whenReady().then(createWindow)
+
+app.whenReady().then(setTimeout(() => {
+  checkForUpdates();
+}, 2000));
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
