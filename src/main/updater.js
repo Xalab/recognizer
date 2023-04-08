@@ -15,10 +15,11 @@ export const checkForUpdates = () => {
             title: "Update available",
             message: "A new version of Recognizer is available. Do you want to download and install it now?",
             buttons: ["Yes", "No"]
-        }).then(({responce}) => {
-                if (responce === 0) {
-                    autoUpdater.downloadUpdate()
-                }
+        }).then(({ response }) => {
+            console.log("Im here");
+            if (response === 0) {
+                autoUpdater.downloadUpdate()
+            }
         })
     })
 
@@ -28,11 +29,27 @@ export const checkForUpdates = () => {
             title: "Update ready",
             message: "Insall and restart now?",
             buttons: ["Yes", "Later"]
-        }).then(({response}) => {
+        }).then(({ response }) => {
             if (response === 0) {
                 autoUpdater.quitAndInstall(false, true);
             }
         })
     })
+
+    autoUpdater.on("update-not-available", () => {
+        console.log("Update not available");
+    });
+
+    autoUpdater.on("error", (error) => {
+        console.error("Error during update:", error);
+    });
+
+    autoUpdater.on("download-progress", (progress) => {
+        console.log(`Download progress: ${progress.percent.toFixed(2)}%`);
+    });
+
+    autoUpdater.on("update-downloaded", (info) => {
+        console.log("Update downloaded:", info);
+    });
 }
 

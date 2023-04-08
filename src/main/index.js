@@ -50,6 +50,7 @@ app.on('activate', () => {
 })
 
 let pathToModel;
+let outputPath;
 
 function selectFolder() {
   dialog.showOpenDialog({
@@ -69,14 +70,28 @@ ipcMain.on('select-folder', (event, arg) => {
   selectFolder();
 });
 
+ipcMain.on('open-save-dialog', (event) => {
+  const options = {
+    title: "Выберите куда сохранить",
+    defaultPath: `${new Date().toLocaleTimeString().replace(/:/g, "-")}_${new Date().toLocaleDateString("ru-RU").replace(/\./g, "-")}_recognizer.txt`,
+    filters: [{ name: "Text Files", extensions: ["txt"] }],
+  };
+
+  dialog.showSaveDialog(options).then((result) => {
+    if (!result.canceled) {
+      outputPath = result.filePath
+    }
+  });
+});
+
 ipcMain.on("recognize", (event, arg) => {
-  createRecognizer(arg);
+  createRecognizer(arg, outputPath);
 })
 
 
-const createRecognizer = (pathToModel) => {
+const createRecognizer = (pathToModel, outputPath) => {
   const scriptPath = 'recognition.py';
-  const args = ['-m', pathToModel];
+  const args = ['-m', pathToModel, "-o", outputPath];
 
   const scriptProcess = spawn('python', [scriptPath, ...args]);
 

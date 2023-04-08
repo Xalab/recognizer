@@ -1,6 +1,6 @@
 {
   "name": "Recognizer",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Recognizer app",
   "author": {
     "name": "Sviatoslav Shmoilov",
@@ -25,8 +25,7 @@
     "copyright": "Copyright 2023 Shmoilov Sviatoslav",
     "publish": [
       {
-        "provider": "github",
-        "private": true
+        "provider": "github"
       }
     ],
     "win": {

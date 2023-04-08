@@ -10,15 +10,13 @@ contextBridge.exposeInMainWorld('myApi', {
   getPath() {
     ipcRenderer.on('selected-folder', (_, folderPath) => {
       if (path.basename(folderPath).includes("vosk")) {
-        document.getElementById("select-folder").style.backgroundColor = "green";
-        const pathElement = document.getElementById('path');
-        pathElement.textContent = folderPath;
-        pathToModel = folderPath;
+        document.getElementById("select-folder").style.backgroundColor = "#6CE987";
+        const recBtn = document.getElementById('start-rec');
+        recBtn.classList.remove("disabled");
+        recBtn.setAttribute("title", folderPath);
       }
       else {
         document.getElementById("select-folder").style.backgroundColor = "red";
-        const pathElement = document.getElementById('path');
-        pathElement.textContent = "Это не модуль: " + folderPath;
       }
     })
   },
@@ -31,5 +29,8 @@ contextBridge.exposeInMainWorld('myApi', {
       newp.innerText = data;
       document.getElementById("messages").appendChild(newp);
     })
+  },
+  showSaveDialog() {
+    ipcRenderer.send('open-save-dialog');
   }
 });

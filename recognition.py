@@ -44,10 +44,24 @@ parser.add_argument("-f", "--filename", type=str, metavar="FILENAME", help="audi
 parser.add_argument("-d", "--device", type=int_or_str, help="input device (numeric ID or substring)")
 parser.add_argument("-r", "--samplerate", type=int, help="sampling rate")
 parser.add_argument("-m", "--model", type=str, help="language model; paste path here")
+parser.add_argument("-o", "--output", type=str, metavar="OUTPUT", help="path to save recognized text")
+
 
 args = parser.parse_args(remaining)
 
+def send_to_server(text, file_path=None):
+    data = {'text': text.strip()}
+    headers = {'Content-Type': 'application/json; charset=utf-8'}
+    try:
+        requests.post(url, json=data, headers=headers)
+    except Exception as e:
+        print("Connection error, cannot send message to bot")
+    if file_path:
+        save_to_file(text, file_path)
 
+def save_to_file(text, file_path):
+    with open(file_path, "a", encoding="utf-8") as f:
+        f.write(text + "\n")
 
 samplerate = sd.query_devices(args.device, "input")["default_samplerate"]
 blocksize = int(samplerate/10)
@@ -79,15 +93,11 @@ try:
             data = q.get()
             if rec.AcceptWaveform(data):
                 text = rec.Result()
-                data = {'text': text.strip()}
-                headers = {'Content-Type': 'application/json; charset=utf-8'}
-                try:
-                    requests.post(url, json=data, headers=headers)
-                except Exception as e:
-                    print("Connection error, cannot send message to bot")
-                print(rec.Result())
+                send_to_server(text, args.output)
+                print(text)
             else:
-                print(rec.PartialResult())
+                partial_result = rec.PartialResult()
+                print(partial_result)
             if dump_fn is not None:
                 dump_fn.write(data)
 

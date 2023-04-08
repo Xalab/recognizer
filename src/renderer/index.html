@@ -5,17 +5,25 @@
   <meta charset="UTF-8">
   <title></title>
 </head>
+
 <body>
-  <h1>Распознавание речи</h1>
-  <div class="model-choose">
-    <button id="select-folder">Выберите папку модели языка</button>
-    <p id="path"></p>
+  <div class="name">
+    <h1>Распознавание речи</h1>
   </div>
-  <div class="start-rec">
-    <button id="start-rec">Начать распознование</button>
+  <div class="main-buttons" id="main-buttons">
+    <div>
+      <button class="main-btn" id="select-folder">Выберите модель</button>
+    </div>
+    <div>
+      <button class="main-btn" id="select-output">Выберите куда сохранить</button>
+    </div>
+    <div>
+      <button class="main-btn" id="connect-bot">Подключить бота</button>
+    </div>
   </div>
+  <button class="main-btn start-rec disabled" id="start-rec">Начать распознавание</button>
   <div class="messages" id="messages">
-    <h2>Расспознанный текст:</h2>
+    <h2>Распознанный текст:</h2>
   </div>
   <script src="index.js" type="text/javascript" defer></script>
 </body>
