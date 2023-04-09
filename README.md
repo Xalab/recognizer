@@ -1,28 +1,23 @@
 # Recognizer
 
-> My Recognizer app built with Electron
+> My Recognizer app built for recognize speech offline.
 
 
-## Dev
-
-```
-$ npm install
-```
-
-### Run
+## Installation
 
 ```
-$ bozon start
+Just download and install .exe file.
 ```
 
-### Package
+### How to use
 
 ```
-$ bozon package
+First in main window choose your Vosk model (https://alphacephei.com/vosk/models).
+After this you have to find recognition.py file, by clicking on button "Find recognition.py"
+And also you can choose directory to output file.
+Press "Recognize" and wait until your model loaded.
+Thats all.
 ```
-
-Builds the app for OS X, Linux, and Windows, using [electron-builder](https://github.com/electron-userland/electron-builder).
-
 
 ## License
 
