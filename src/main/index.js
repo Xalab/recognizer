@@ -5,6 +5,13 @@ import Express from 'express';
 import bodyParser from 'body-parser';
 import { checkForUpdates } from './updater';
 
+let allDiagnostics = {
+  "dirs": {
+    "python": "have to be installed in system",
+    "script": "selected in prog"
+  }
+};
+
 console.log("Приложение начинает работу!");
 
 const createWindow = () => {
@@ -37,6 +44,12 @@ app.whenReady().then(setTimeout(() => {
   checkForUpdates();
 }, 2000));
 
+app.whenReady().then(() => {
+  BrowserWindow.getFocusedWindow().webContents.send('diagnostics', allDiagnostics);
+})
+
+
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -51,6 +64,31 @@ app.on('activate', () => {
 
 let pathToModel;
 let outputPath;
+let pathToScript;
+
+function getRecFile() {
+  dialog.showOpenDialog({
+    properties: ['openFile']
+  }).then(result => {
+    console.log(result.canceled);
+    console.log(result.filePaths);
+    if(path.basename(result.filePaths[0]).includes("recognition.py")) {
+      pathToScript = result.filePaths[0];
+      BrowserWindow.getFocusedWindow().webContents.send('is-recognition', true);
+      console.log("Got file of recognition!");
+    }
+    else {
+      BrowserWindow.getFocusedWindow().webContents.send('is-recognition', true);
+      console.log("File is wrong!");
+    }
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+ipcMain.on("open-recognition", () => {
+  getRecFile();
+})
 
 function selectFolder() {
   dialog.showOpenDialog({
@@ -79,7 +117,9 @@ ipcMain.on('open-save-dialog', (event) => {
 
   dialog.showSaveDialog(options).then((result) => {
     if (!result.canceled) {
-      outputPath = result.filePath
+      outputPath = result.filePath;
+      console.log("save path is ready");
+      BrowserWindow.getFocusedWindow().webContents.send('saved-file', true);
     }
   });
 });
@@ -90,14 +130,14 @@ ipcMain.on("recognize", (event, arg) => {
 
 
 const createRecognizer = (pathToModel, outputPath) => {
-  const scriptPath = 'recognition.py';
   const args = ['-m', pathToModel, "-o", outputPath];
 
-  const scriptProcess = spawn('python', [scriptPath, ...args]);
+  const scriptProcess = spawn("python", [pathToScript, ...args]);
 
   scriptProcess.stderr.on('data', (data) => {
     // Обработка ошибок из скрипта Python
     console.error(`stderr: ${data}`);
+    BrowserWindow.getFocusedWindow().webContents.send('script-errors', data);
   });
 
   scriptProcess.on('close', (code) => {
@@ -120,7 +160,9 @@ const createRecognizer = (pathToModel, outputPath) => {
     const obj = JSON.parse(body["text"]);
     console.log(obj.text.toString('utf-8'));
     if(obj.text.toString('utf-8') != "") {
-      const readyMessage = Date.now + obj.text.toString('utf-8')
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.toLocaleTimeString()} ${currentDate.toLocaleDateString()}`  + " --> ";
+      const readyMessage = formattedDate + obj.text.toString('utf-8')
       BrowserWindow.getFocusedWindow().webContents.send('messages', readyMessage);
     }
     res.sendStatus(200);

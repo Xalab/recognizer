@@ -18,13 +18,16 @@
       <button class="main-btn" id="select-output">Выберите куда сохранить</button>
     </div>
     <div>
-      <button class="main-btn" id="connect-bot">Подключить бота</button>
+      <button class="main-btn recognition" id="recognition-file">Выберите recognition.py</button>
     </div>
   </div>
-  <button class="main-btn start-rec disabled" id="start-rec">Начать распознавание</button>
   <div class="messages" id="messages">
     <h2>Распознанный текст:</h2>
   </div>
+  <button class="main-btn start-rec disabled" id="start-rec">
+    Начать распознавание
+    <div class="loader" id="loader"></div>
+  </button>
   <script src="index.js" type="text/javascript" defer></script>
 </body>
 

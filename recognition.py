@@ -5,6 +5,8 @@ import sys
 import sounddevice as sd
 import requests
 import os
+from datetime import datetime
+import json
 
 
 model_path = current_dir = os.path.dirname(sys.executable) + "\\vosk-model-ru-0.42"
@@ -57,7 +59,11 @@ def send_to_server(text, file_path=None):
     except Exception as e:
         print("Connection error, cannot send message to bot")
     if file_path:
-        save_to_file(text, file_path)
+        timestamp = datetime.now().strftime('%H:%M:%S %d.%m.%Y')
+        result_text = json.loads(text)['text']
+        if result_text != "":
+            formatted_text = f"{timestamp} --> {result_text.strip()}"
+            save_to_file(formatted_text, file_path)
 
 def save_to_file(text, file_path):
     with open(file_path, "a", encoding="utf-8") as f:
