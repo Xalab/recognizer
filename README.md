@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-Just download and install .exe file.
+Just download and install .exe file. Also, you may need installed python 3.x.x.
 ```
 
 ### How to use
