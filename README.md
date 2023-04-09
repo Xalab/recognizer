@@ -1,6 +1,6 @@
 # Recognizer
 
-> My Recognizer app built for recognize speech offline.
+> The Recognizer app is designed for offline speech recognition on Windows.
 
 
 ## Installation
@@ -12,11 +12,11 @@ Just download and install .exe file.
 ### How to use
 
 ```
-First in main window choose your Vosk model (https://alphacephei.com/vosk/models).
-After this you have to find recognition.py file, by clicking on button "Find recognition.py"
-And also you can choose directory to output file.
-Press "Recognize" and wait until your model loaded.
-Thats all.
+First, in the main window, select your Vosk model (https://alphacephei.com/vosk/models).
+After that, you need to find the recognition.py file by clicking on the "Find recognition.py" button.
+You can also select a directory to output a file with recognized text.
+Click "Recognize" and wait for your model to load.
+That's all.
 ```
 
 ## License
