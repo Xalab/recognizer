@@ -6,7 +6,8 @@
 ## Installation
 
 ```
-First download and install .exe file. In second step, you need to install python 3.x.x. with modules "vosk" (pip install vosk) and "sounddevice" (pip install sounddevice).
+First download and install .exe file. In second step, you need to install python 3.x.x. with 
+modules "vosk" (pip install vosk) and "sounddevice" (pip install sounddevice).
 ```
 
 ### How to use
